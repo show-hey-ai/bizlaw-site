@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ビジネス法務検定3級 - 毎日の学習サイト</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Yu Gothic', 'Meiryo', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .header h1 {
+            color: #4a5568;
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .header p {
+            color: #718096;
+            font-size: 1.1em;
+        }
+
+        .date-display {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.2em;
+            color: #4a5568;
+            font-weight: bold;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .section h2 {
+            color: #4a5568;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .question-item {
+            background: #f7fafc;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 5px solid #667eea;
+        }
+
+        .question-number {
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .question-text {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+
+        .answer-button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            margin-bottom: 15px;
+        }
+
+        .answer-button:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .answer-section {
+            display: none;
+            background: #e6fffa;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 10px;
+            border: 1px solid #81e6d9;
+        }
+
+        .answer-section.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .correct-answer {
+            font-weight: bold;
+            color: #38a169;
+            margin-bottom: 10px;
+        }
+
+        .explanation {
+            color: #2d3748;
+            line-height: 1.7;
+        }
+
+        .story-section {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .story-title {
+            color: #744210;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .story-content {
+            color: #744210;
+            font-size: 1.1em;
+            line-height: 1.8;
+            font-style: italic;
+        }
+
+        .archive-section {
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .archive-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .archive-link {
+            background: #f7fafc;
+            padding: 15px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #4a5568;
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .archive-link:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .report-section {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .report-link {
+            display: inline-block;
+            background: #e53e3e;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .report-link:hover {
+            background: #c53030;
+            transform: translateY(-2px);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #718096;
+        }
+
+        .error {
+            background: #fed7d7;
+            color: #c53030;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>📚 ビジネス法務検定3級</h1>
+            <p>毎日の学習で合格を目指そう！</p>
+        </header>
+
+        <div class="date-display" id="dateDisplay">
+            📅 読み込み中...
+        </div>
+
+        <section class="section">
+            <h2>📝 今日の問題（10問）</h2>
+            <div id="questionsContainer" class="loading">
+                問題を読み込み中です...
+            </div>
+        </section>
+
+        <section class="section story-section">
+            <h2 class="story-title">💪 今日の合格体験談</h2>
+            <div id="storyContainer" class="loading">
+                体験談を読み込み中です...
+            </div>
+        </section>
+
+        <section class="section archive-section">
+            <h2>📂 過去の問題</h2>
+            <div id="archiveContainer">
+                <div class="archive-links">
+                    <a href="#" class="archive-link">2024/12/28</a>
+                    <a href="#" class="archive-link">2024/12/27</a>
+                    <a href="#" class="archive-link">2024/12/26</a>
+                    <a href="#" class="archive-link">2024/12/25</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="section report-section">
+            <h2>📧 誤りの報告</h2>
+            <p>問題や解説に誤りを見つけた場合は、こちらからお知らせください。</p>
+            <a href="https://forms.google.com/..." class="report-link" target="_blank">
+                誤りを報告する
+            </a>
+        </section>
+    </div>
+
+    <script>
+        // 今日の日付を表示
+        function displayCurrentDate() {
+            const today = new Date();
+            const options = { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                weekday: 'long'
+            };
+            const dateString = today.toLocaleDateString('ja-JP', options);
+            document.getElementById('dateDisplay').textContent = `📅 ${dateString}`;
+        }
+
+        // 問題データの例（実際はJSONファイルから取得）
+        const sampleQuestions = [
+            {
+                id: 1,
+                question: "株式会社の取締役は、会社に対して善管注意義務を負う。",
+                answer: true,
+                explanation: "取締役は会社との委任関係に基づき、善良な管理者の注意義務（善管注意義務）を負います。これは会社法第330条に規定されています。"
+            },
+            {
+                id: 2,
+                question: "契約の成立には、必ず書面での合意が必要である。",
+                answer: false,
+                explanation: "契約は原則として口頭での合意でも成立します。ただし、不動産売買など法律で書面を要求されている契約もあります。"
+            },
+            {
+                id: 3,
+                question: "著作権の保護期間は、著作者の死後50年間である。",
+                answer: false,
+                explanation: "現在の著作権法では、著作者の死後70年間保護されます。2018年の法改正により50年から70年に延長されました。"
+            },
+            {
+                id: 4,
+                question: "労働基準法において、1日の労働時間は原則として8時間以内とされている。",
+                answer: true,
+                explanation: "労働基準法第32条により、1日の労働時間は8時間、1週間の労働時間は40時間を超えてはならないと定められています。"
+            },
+            {
+                id: 5,
+                question: "個人情報保護法は、個人事業主には適用されない。",
+                answer: false,
+                explanation: "個人情報保護法は事業の形態に関わらず、個人情報を取り扱う事業者に適用されます。個人事業主も対象となります。"
+            },
+            {
+                id: 6,
+                question: "商標権の存続期間は登録から10年間で、更新はできない。",
+                answer: false,
+                explanation: "商標権の存続期間は登録から10年間ですが、10年ごとに更新することが可能で、理論上は永続的に保護を受けることができます。"
+            },
+            {
+                id: 7,
+                question: "株主総会の普通決議は、出席株主の議決権の過半数で決議される。",
+                answer: true,
+                explanation: "普通決議は、定足数の定めがなく、出席した議決権を行使できる株主の議決権の過半数で決議されます。"
+            },
+            {
+                id: 8,
+                question: "下請代金支払遅延等防止法は、資本金3億円以下の会社には適用されない。",
+                answer: false,
+                explanation: "下請法は親事業者の資本金額と下請事業者との関係により適用が決まります。親事業者が資本金3億円超で下請事業者が3億円以下の場合などに適用されます。"
+            },
+            {
+                id: 9,
+                question: "製造物責任法（PL法）では、製造者は無過失責任を負う。",
+                answer: true,
+                explanation: "PL法では、製造者は製品の欠陥について過失の有無に関わらず責任を負います（無過失責任主義）。"
+            },
+            {
+                id: 10,
+                question: "特許権の存続期間は、出願日から20年間である。",
+                answer: true,
+                explanation: "特許権の存続期間は出願日から20年です。ただし、医薬品等については特定の条件下で延長される場合があります。"
+            }
+        ];
+
+        const sampleStory = {
+            content: "ビジ法3級の勉強を始めたとき、法律用語の多さに圧倒されました。しかし毎日少しずつ問題を解き続けることで、だんだん理解が深まり、3ヶ月後には見事合格！継続は力なりを実感しました。皆さんも諦めずに頑張ってください！"
+        };
+
+        // 問題を表示する関数
+        function displayQuestions(questions) {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+
+            questions.forEach(q => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question-item';
+                questionDiv.innerHTML = `
+                    <div class="question-number">問題 ${q.id}</div>
+                    <div class="question-text">${q.question}</div>
+                    <button class="answer-button" onclick="toggleAnswer(${q.id})">
+                        答えを見る
+                    </button>
+                    <div class="answer-section" id="answer-${q.id}">
+                        <div class="correct-answer">
+                            正解: ${q.answer ? '○' : '×'}
+                        </div>
+                        <div class="explanation">
+                            ${q.explanation}
+                        </div>
+                    </div>
+                `;
+                container.appendChild(questionDiv);
+            });
+        }
+
+        // 回答表示切り替え
+        function toggleAnswer(questionId) {
+            const answerSection = document.getElementById(`answer-${questionId}`);
+            answerSection.classList.toggle('show');
+        }
+
+        // 体験談を表示する関数
+        function displayStory(story) {
+            const container = document.getElementById('storyContainer');
+            container.innerHTML = `<div class="story-content">${story.content}</div>`;
+        }
+
+        // データ読み込み（実際のJSONファイル読み込みをシミュレート）
+        async function loadTodaysData() {
+            try {
+                // 実際の実装では、以下のようにJSONファイルを読み込む
+                // const today = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+                // const questionsResponse = await fetch(`./data/questions_${today}.json`);
+                // const questions = await questionsResponse.json();
+                // const storyResponse = await fetch(`./data/story_${today}.json`);
+                // const story = await storyResponse.json();
+
+                // デモ用のサンプルデータを使用
+                await new Promise(resolve => setTimeout(resolve, 1000)); // 読み込み感をシミュレート
+                
+                displayQuestions(sampleQuestions);
+                displayStory(sampleStory);
+            } catch (error) {
+                console.error('データの読み込みに失敗しました:', error);
+                document.getElementById('questionsContainer').innerHTML = 
+                    '<div class="error">問題の読み込みに失敗しました。しばらく後でお試しください。</div>';
+                document.getElementById('storyContainer').innerHTML = 
+                    '<div class="error">体験談の読み込みに失敗しました。</div>';
+            }
+        }
+
+        // ページ読み込み時の初期化
+        document.addEventListener('DOMContentLoaded', function() {
+            displayCurrentDate();
+            loadTodaysData();
+        });
+    </script>
+</body>
+</html>
