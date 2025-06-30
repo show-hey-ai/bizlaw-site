@@ -184,12 +184,30 @@
             border: 2px solid #e2e8f0;
             transition: all 0.3s ease;
             text-align: center;
+            cursor: pointer;
         }
 
         .archive-link:hover {
             border-color: #667eea;
             transform: translateY(-2px);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-to-today {
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            margin: 20px 0;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        .back-to-today:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
         }
 
         .report-section {
@@ -226,6 +244,15 @@
             text-align: center;
         }
 
+        .archive-header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #e6fffa;
+            border-radius: 8px;
+            border: 2px solid #81e6d9;
+        }
+
         @media (max-width: 768px) {
             .container {
                 padding: 10px;
@@ -253,7 +280,7 @@
         </div>
 
         <section class="section">
-            <h2>📝 今日の問題（10問）</h2>
+            <h2 id="questionsTitle">📝 今日の問題（10問）</h2>
             <div id="questionsContainer" class="loading">
                 問題を読み込み中です...
             </div>
@@ -296,89 +323,59 @@
             document.getElementById('dateDisplay').textContent = `📅 ${dateString}`;
         }
 
-        // 問題データの例（実際はJSONファイルから取得）
-        const sampleQuestions = [
-            {
-                id: 1,
-                question: "株式会社の取締役は、会社に対して善管注意義務を負う。",
-                answer: true,
-                explanation: "取締役は会社との委任関係に基づき、善良な管理者の注意義務（善管注意義務）を負います。これは会社法第330条に規定されています。"
-            },
-            {
-                id: 2,
-                question: "契約の成立には、必ず書面での合意が必要である。",
-                answer: false,
-                explanation: "契約は原則として口頭での合意でも成立します。ただし、不動産売買など法律で書面を要求されている契約もあります。"
-            },
-            {
-                id: 3,
-                question: "著作権の保護期間は、著作者の死後50年間である。",
-                answer: false,
-                explanation: "現在の著作権法では、著作者の死後70年間保護されます。2018年の法改正により50年から70年に延長されました。"
-            },
-            {
-                id: 4,
-                question: "労働基準法において、1日の労働時間は原則として8時間以内とされている。",
-                answer: true,
-                explanation: "労働基準法第32条により、1日の労働時間は8時間、1週間の労働時間は40時間を超えてはならないと定められています。"
-            },
-            {
-                id: 5,
-                question: "個人情報保護法は、個人事業主には適用されない。",
-                answer: false,
-                explanation: "個人情報保護法は事業の形態に関わらず、個人情報を取り扱う事業者に適用されます。個人事業主も対象となります。"
-            },
-            {
-                id: 6,
-                question: "商標権の存続期間は登録から10年間で、更新はできない。",
-                answer: false,
-                explanation: "商標権の存続期間は登録から10年間ですが、10年ごとに更新することが可能で、理論上は永続的に保護を受けることができます。"
-            },
-            {
-                id: 7,
-                question: "株主総会の普通決議は、出席株主の議決権の過半数で決議される。",
-                answer: true,
-                explanation: "普通決議は、定足数の定めがなく、出席した議決権を行使できる株主の議決権の過半数で決議されます。"
-            },
-            {
-                id: 8,
-                question: "下請代金支払遅延等防止法は、資本金3億円以下の会社には適用されない。",
-                answer: false,
-                explanation: "下請法は親事業者の資本金額と下請事業者との関係により適用が決まります。親事業者が資本金3億円超で下請事業者が3億円以下の場合などに適用されます。"
-            },
-            {
-                id: 9,
-                question: "製造物責任法（PL法）では、製造者は無過失責任を負う。",
-                answer: true,
-                explanation: "PL法では、製造者は製品の欠陥について過失の有無に関わらず責任を負います（無過失責任主義）。"
-            },
-            {
-                id: 10,
-                question: "特許権の存続期間は、出願日から20年間である。",
-                answer: true,
-                explanation: "特許権の存続期間は出願日から20年です。ただし、医薬品等については特定の条件下で延長される場合があります。"
-            }
-        ];
+        // 日付をYYYYMMDD形式に変換
+        function formatDateString(date) {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}${month}${day}`;
+        }
 
-        const sampleStory = {
-            content: "ビジ法3級の勉強を始めたとき、法律用語の多さに圧倒されました。しかし毎日少しずつ問題を解き続けることで、だんだん理解が深まり、3ヶ月後には見事合格！継続は力なりを実感しました。皆さんも諦めずに頑張ってください！"
-        };
+        // 日付を表示用形式に変換
+        function formatDisplayDate(date) {
+            return date.toLocaleDateString('ja-JP', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit'
+            });
+        }
 
         // 問題を表示する関数
-        function displayQuestions(questions) {
+        function displayQuestions(questions, isArchive = false, archiveDate = null) {
             const container = document.getElementById('questionsContainer');
             container.innerHTML = '';
 
+            // アーカイブ表示の場合はヘッダーを追加
+            if (isArchive && archiveDate) {
+                const headerDiv = document.createElement('div');
+                headerDiv.className = 'archive-header';
+                headerDiv.innerHTML = `
+                    <strong>${archiveDate} の問題</strong>
+                    <button class="back-to-today" onclick="loadTodaysData()">
+                        今日の問題に戻る
+                    </button>
+                `;
+                container.appendChild(headerDiv);
+                
+                // タイトルも変更
+                document.getElementById('questionsTitle').textContent = `📝 ${archiveDate} の問題（10問）`;
+            } else {
+                // 今日の問題表示時はタイトルをリセット
+                document.getElementById('questionsTitle').textContent = '📝 今日の問題（10問）';
+            }
+
+            // 問題を表示
             questions.forEach(q => {
                 const questionDiv = document.createElement('div');
                 questionDiv.className = 'question-item';
+                const questionId = isArchive ? `archive-${q.id}` : q.id;
                 questionDiv.innerHTML = `
                     <div class="question-number">問題 ${q.id}</div>
                     <div class="question-text">${q.question}</div>
-                    <button class="answer-button" onclick="toggleAnswer(${q.id})">
+                    <button class="answer-button" onclick="toggleAnswer('${questionId}')">
                         答えを見る
                     </button>
-                    <div class="answer-section" id="answer-${q.id}">
+                    <div class="answer-section" id="answer-${questionId}">
                         <div class="correct-answer">
                             正解: ${q.answer ? '○' : '×'}
                         </div>
@@ -403,39 +400,39 @@
             container.innerHTML = `<div class="story-content">${story.content}</div>`;
         }
 
-        // データ読み込み（実際のJSONファイル読み込みをシミュレート）
+        // 今日のデータを読み込む関数
         async function loadTodaysData() {
             try {
-                const today = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+                const today = new Date();
+                const todayStr = formatDateString(today);
                 
+                // 今日の問題を読み込み
                 try {
-                    // 今日の問題を読み込み
-                    const questionsResponse = await fetch(`./data/questions_${today}.json`);
+                    const questionsResponse = await fetch(`./data/questions_${todayStr}.json`);
                     if (questionsResponse.ok) {
                         const questionsData = await questionsResponse.json();
-                        displayQuestions(questionsData.questions);
+                        displayQuestions(questionsData.questions, false);
                     } else {
                         // 今日のファイルがない場合はサンプルデータを表示
-                        displayQuestions(sampleQuestions);
+                        displayQuestions(getSampleQuestions(), false);
                     }
                 } catch (error) {
-                    // エラーの場合はサンプルデータを表示
-                    displayQuestions(sampleQuestions);
+                    console.error('今日の問題読み込みエラー:', error);
+                    displayQuestions(getSampleQuestions(), false);
                 }
                 
+                // 今日の体験談を読み込み
                 try {
-                    // 今日の体験談を読み込み
-                    const storyResponse = await fetch(`./data/story_${today}.json`);
+                    const storyResponse = await fetch(`./data/story_${todayStr}.json`);
                     if (storyResponse.ok) {
                         const storyData = await storyResponse.json();
                         displayStory(storyData.story);
                     } else {
-                        // 今日のファイルがない場合はサンプルデータを表示
-                        displayStory(sampleStory);
+                        displayStory(getSampleStory());
                     }
                 } catch (error) {
-                    // エラーの場合はサンプルデータを表示
-                    displayStory(sampleStory);
+                    console.error('今日の体験談読み込みエラー:', error);
+                    displayStory(getSampleStory());
                 }
                 
                 // 過去の問題を読み込み
@@ -449,29 +446,26 @@
                     '<div class="error">体験談の読み込みに失敗しました。</div>';
             }
         }
-        
+
         // 過去の問題を読み込む関数
         async function loadArchiveData() {
             const archiveContainer = document.getElementById('archiveContainer');
             const archiveDates = [];
+            const today = new Date();
             
             // 過去30日分のファイルをチェック
             for (let i = 1; i <= 30; i++) {
-                const date = new Date();
+                const date = new Date(today);
                 date.setDate(date.getDate() - i);
-                const dateStr = date.toISOString().slice(0, 10).replace(/-/g, '');
+                const dateStr = formatDateString(date);
                 
                 try {
                     const response = await fetch(`./data/questions_${dateStr}.json`);
                     if (response.ok) {
-                        const displayDate = date.toLocaleDateString('ja-JP', {
-                            year: 'numeric',
-                            month: '2-digit',
-                            day: '2-digit'
-                        }).replace(/\//g, '/');
+                        const displayDate = formatDisplayDate(date);
                         archiveDates.push({
-                            date: dateStr,
-                            display: displayDate,
+                            dateStr: dateStr,
+                            displayDate: displayDate,
                             fullDate: date
                         });
                     }
@@ -485,7 +479,7 @@
                 archiveDates.sort((a, b) => b.fullDate - a.fullDate);
                 
                 const archiveLinksHTML = archiveDates.map(item => 
-                    `<a href="#" class="archive-link" onclick="loadArchiveQuestions('${item.date}')">${item.display}</a>`
+                    `<div class="archive-link" onclick="loadArchiveQuestions('${item.dateStr}', '${item.displayDate}')">${item.displayDate}</div>`
                 ).join('');
                 
                 archiveContainer.innerHTML = `<div class="archive-links">${archiveLinksHTML}</div>`;
@@ -494,45 +488,18 @@
                     '<p style="text-align: center; color: #718096; font-style: italic;">過去の問題は蓄積され次第、こちらに表示されます。</p>';
             }
         }
-        
+
         // 過去の問題を表示する関数
-        async function loadArchiveQuestions(dateStr) {
+        async function loadArchiveQuestions(dateStr, displayDate) {
             try {
                 const response = await fetch(`./data/questions_${dateStr}.json`);
                 if (response.ok) {
                     const data = await response.json();
+                    displayQuestions(data.questions, true, displayDate);
                     
-                    // 今日の問題セクションを過去の問題で置き換え
-                    const questionsContainer = document.getElementById('questionsContainer');
-                    questionsContainer.innerHTML = '';
-                    
-                    // ヘッダーを追加
-                    const headerDiv = document.createElement('div');
-                    headerDiv.style.cssText = 'text-align: center; margin-bottom: 20px; padding: 15px; background: #e6fffa; border-radius: 8px;';
-                    const displayDate = new Date(dateStr.slice(0,4), dateStr.slice(4,6)-1, dateStr.slice(6,8)).toLocaleDateString('ja-JP');
-                    headerDiv.innerHTML = `<strong>${displayDate} の問題</strong> <button onclick="loadTodaysData()" style="margin-left: 10px; padding: 5px 10px; background: #667eea; color: white; border: none; border-radius: 5px; cursor: pointer;">今日の問題に戻る</button>`;
-                    questionsContainer.appendChild(headerDiv);
-                    
-                    // 問題を表示
-                    data.questions.forEach(q => {
-                        const questionDiv = document.createElement('div');
-                        questionDiv.className = 'question-item';
-                        questionDiv.innerHTML = `
-                            <div class="question-number">問題 ${q.id}</div>
-                            <div class="question-text">${q.question}</div>
-                            <button class="answer-button" onclick="toggleAnswer('archive-${dateStr}-${q.id}')">
-                                答えを見る
-                            </button>
-                            <div class="answer-section" id="answer-archive-${dateStr}-${q.id}">
-                                <div class="correct-answer">
-                                    正解: ${q.answer ? '○' : '×'}
-                                </div>
-                                <div class="explanation">
-                                    ${q.explanation}
-                                </div>
-                            </div>
-                        `;
-                        questionsContainer.appendChild(questionDiv);
+                    // スクロールして問題セクションを表示
+                    document.getElementById('questionsTitle').scrollIntoView({ 
+                        behavior: 'smooth' 
                     });
                 } else {
                     alert('過去の問題データが見つかりませんでした。');
@@ -541,6 +508,78 @@
                 console.error('過去の問題読み込みエラー:', error);
                 alert('過去の問題の読み込みに失敗しました。');
             }
+        }
+
+        // サンプルデータ（ファイルがない場合の代替）
+        function getSampleQuestions() {
+            return [
+                {
+                    id: 1,
+                    question: "株式会社の取締役は、会社に対して善管注意義務を負う。",
+                    answer: true,
+                    explanation: "取締役は会社との委任関係に基づき、善良な管理者の注意義務（善管注意義務）を負います。これは会社法第330条に規定されています。"
+                },
+                {
+                    id: 2,
+                    question: "契約の成立には、必ず書面での合意が必要である。",
+                    answer: false,
+                    explanation: "契約は原則として口頭での合意でも成立します。ただし、不動産売買など法律で書面を要求されている契約もあります。"
+                },
+                {
+                    id: 3,
+                    question: "著作権の保護期間は、著作者の死後50年間である。",
+                    answer: false,
+                    explanation: "現在の著作権法では、著作者の死後70年間保護されます。2018年の法改正により50年から70年に延長されました。"
+                },
+                {
+                    id: 4,
+                    question: "労働基準法において、1日の労働時間は原則として8時間以内とされている。",
+                    answer: true,
+                    explanation: "労働基準法第32条により、1日の労働時間は8時間、1週間の労働時間は40時間を超えてはならないと定められています。"
+                },
+                {
+                    id: 5,
+                    question: "個人情報保護法は、個人事業主には適用されない。",
+                    answer: false,
+                    explanation: "個人情報保護法は事業の形態に関わらず、個人情報を取り扱う事業者に適用されます。個人事業主も対象となります。"
+                },
+                {
+                    id: 6,
+                    question: "商標権の存続期間は登録から10年間で、更新はできない。",
+                    answer: false,
+                    explanation: "商標権の存続期間は登録から10年間ですが、10年ごとに更新することが可能で、理論上は永続的に保護を受けることができます。"
+                },
+                {
+                    id: 7,
+                    question: "株主総会の普通決議は、出席株主の議決権の過半数で決議される。",
+                    answer: true,
+                    explanation: "普通決議は、定足数の定めがなく、出席した議決権を行使できる株主の議決権の過半数で決議されます。"
+                },
+                {
+                    id: 8,
+                    question: "下請代金支払遅延等防止法は、資本金3億円以下の会社には適用されない。",
+                    answer: false,
+                    explanation: "下請法は親事業者の資本金額と下請事業者との関係により適用が決まります。親事業者が資本金3億円超で下請事業者が3億円以下の場合などに適用されます。"
+                },
+                {
+                    id: 9,
+                    question: "製造物責任法（PL法）では、製造者は無過失責任を負う。",
+                    answer: true,
+                    explanation: "PL法では、製造者は製品の欠陥について過失の有無に関わらず責任を負います（無過失責任主義）。"
+                },
+                {
+                    id: 10,
+                    question: "特許権の存続期間は、出願日から20年間である。",
+                    answer: true,
+                    explanation: "特許権の存続期間は出願日から20年です。ただし、医薬品等については特定の条件下で延長される場合があります。"
+                }
+            ];
+        }
+
+        function getSampleStory() {
+            return {
+                content: "ビジ法3級の勉強を始めたとき、法律用語の多さに圧倒されました。しかし毎日少しずつ問題を解き続けることで、だんだん理解が深まり、3ヶ月後には見事合格！継続は力なりを実感しました。皆さんも諦めずに頑張ってください！"
+            };
         }
 
         // ページ読み込み時の初期化
