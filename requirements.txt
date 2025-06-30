@@ -1,0 +1,6 @@
+# Gemini CLI版では特別なPythonパッケージは不要
+# 標準ライブラリのみ使用：subprocess, json, datetime, os, sys
+
+# 念のためPython環境を最新に保つためのbasicパッケージ
+requests==2.31.0
+google-generativeai

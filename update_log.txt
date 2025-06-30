@@ -1,0 +1,134 @@
+======================================== 
+Bizlaw Site Auto Update Started 
+Execution Time: 07/01/2025 Tue  0:14:00.65 
+======================================== 
+Fetching latest from remote repository... 
+Activating Python virtual environment... 
+Generating questions... 
+==================================================
+ビジ法3級問題生成スクリプト開始（Google Gemini API版）
+実行時刻: 2025-07-01 00:14:03
+==================================================
+Google Gemini API接続確認完了
+問題を生成中...
+問題ファイルを保存しました: data/questions_20250701.json
+問題生成が正常に完了しました
+生成された問題数: 10
+Generating story... 
+==================================================
+ビジ法3級体験談生成スクリプト開始（Google Gemini API版）
+実行時刻: 2025-07-01 00:14:17
+==================================================
+Google Gemini API接続確認完了
+体験談を生成中...
+体験談ファイルを保存しました: data/story_20250701.json
+体験談生成が正常に完了しました
+体験談内容: 法律知識ゼロから3ヶ月、スキマ時間に過去問を繰り返し解きました。最初は難しくて心が折れそうになったけ...
+======================================== 
+Bizlaw Site Auto Update Started 
+Execution Time: 07/01/2025 Tue  0:30:07.26 
+======================================== 
+Fetching latest from remote repository... 
+Activating Python virtual environment... 
+Generating questions... 
+==================================================
+ビジ法3級問題生成スクリプト開始（Google Gemini API版）
+実行時刻: 2025-07-01 00:30:08
+==================================================
+Google Gemini API接続確認完了
+問題を生成中...
+問題ファイルを保存しました: data/questions_20250701.json
+問題生成が正常に完了しました
+生成された問題数: 10
+Generating story... 
+==================================================
+ビジ法3級体験談生成スクリプト開始（Google Gemini API版）
+実行時刻: 2025-07-01 00:30:21
+==================================================
+Google Gemini API接続確認完了
+体験談を生成中...
+体験談ファイルを保存しました: data/story_20250701.json
+体験談生成が正常に完了しました
+体験談内容: 法律知識ゼロからの挑戦！参考書を読み込み、過去問をひたすら解きました。最初は難解でしたが、毎日30分...
+======================================== 
+Bizlaw Site Auto Update Started 
+Execution Time: 07/01/2025 Tue  0:39:54.40 
+======================================== 
+Fetching latest from remote repository... 
+'git' is not recognized as an internal or external command,
+operable program or batch file.
+Activating Python virtual environment... 
+Generating questions... 
+==================================================
+ビジ法3級問題生成スクリプト開始（Google Gemini API版）
+実行時刻: 2025-07-01 00:39:55
+==================================================
+Google Gemini API接続確認完了
+問題を生成中...
+問題ファイルを保存しました: data/questions_20250701.json
+問題生成が正常に完了しました
+生成された問題数: 10
+Generating story... 
+==================================================
+ビジ法3級体験談生成スクリプト開始（Google Gemini API版）
+実行時刻: 2025-07-01 00:40:08
+==================================================
+Google Gemini API接続確認完了
+体験談を生成中...
+体験談ファイルを保存しました: data/story_20250701.json
+体験談生成が正常に完了しました
+体験談内容: 法律知識ゼロからの挑戦！最初は条文の難解さに挫折しかけましたが、過去問を繰り返し解き、苦手な箇所を重...
+======================================== 
+Bizlaw Site Auto Update Started 
+Execution Time: 07/01/2025 Tue  0:57:07.40 
+======================================== 
+Fetching latest from remote repository... 
+fatal: not a git repository (or any of the parent directories): .git
+Activating Python virtual environment... 
+Generating questions... 
+==================================================
+ビジ法3級問題生成スクリプト開始（Google Gemini API版）
+実行時刻: 2025-07-01 00:57:08
+==================================================
+Google Gemini API接続確認完了
+問題を生成中...
+問題ファイルを保存しました: data/questions_20250701.json
+問題生成が正常に完了しました
+生成された問題数: 10
+Generating story... 
+==================================================
+ビジ法3級体験談生成スクリプト開始（Google Gemini API版）
+実行時刻: 2025-07-01 00:57:22
+==================================================
+Google Gemini API接続確認完了
+体験談を生成中...
+体験談ファイルを保存しました: data/story_20250701.json
+体験談生成が正常に完了しました
+体験談内容: 法律知識ゼロから3ヶ月、スキマ時間に過去問をひたすら解きました。最初は用語も難解で心が折れそうに。で...
+======================================== 
+Bizlaw Site Auto Update Started 
+Execution Time: 07/01/2025 Tue  1:01:44.09 
+======================================== 
+Fetching latest from remote repository... 
+fatal: not a git repository (or any of the parent directories): .git
+Activating Python virtual environment... 
+Generating questions... 
+==================================================
+ビジ法3級問題生成スクリプト開始（Google Gemini API版）
+実行時刻: 2025-07-01 01:01:45
+==================================================
+Google Gemini API接続確認完了
+問題を生成中...
+問題ファイルを保存しました: data/questions_20250701.json
+問題生成が正常に完了しました
+生成された問題数: 10
+Generating story... 
+==================================================
+ビジ法3級体験談生成スクリプト開始（Google Gemini API版）
+実行時刻: 2025-07-01 01:02:00
+==================================================
+Google Gemini API接続確認完了
+体験談を生成中...
+体験談ファイルを保存しました: data/story_20250701.json
+体験談生成が正常に完了しました
+体験談内容: 法律知識ゼロから3ヶ月、過去問と公式テキストをひたすら繰り返しました。最初は難解でしたが、諦めずに毎...
