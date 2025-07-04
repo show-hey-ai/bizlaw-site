@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+venv/
+env/
+*.egg-info/
+dist/
+build/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+update_log.txt
+
+# Temporary files
+*.tmp
+*.temp
+commit_message.txt
+
+# Backup files
+*.backup
+*.bak
+
+# API Keys and sensitive data
+.env
+config.ini

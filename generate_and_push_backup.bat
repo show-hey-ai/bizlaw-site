@@ -1,5 +1,5 @@
 @echo off
-REM Bizlaw Site Auto Update Batch File - Fixed Version
+REM Bizlaw Site Auto Update Batch File
 REM Executed daily at 6:00 AM
 
 REM Log file setup
@@ -40,17 +40,6 @@ echo Fetching latest from remote repository...
 echo Fetching latest from remote repository... >> %LOG_FILE%
 git fetch origin main >> %LOG_FILE% 2>&1
 
-REM Check if GOOGLE_API_KEY is set
-if "%GOOGLE_API_KEY%"=="" (
-    echo ERROR: GOOGLE_API_KEY environment variable is not set
-    echo ERROR: GOOGLE_API_KEY environment variable is not set >> %LOG_FILE%
-    echo Please run fix\setup_api_key.bat to set the API key
-    echo Please run fix\setup_api_key.bat to set the API key >> %LOG_FILE%
-    goto :error
-)
-
-echo API Key is set: %GOOGLE_API_KEY:~0,10%... >> %LOG_FILE%
-
 REM Check if virtual environment exists
 if not exist "venv\Scripts\activate.bat" (
     echo Creating Python virtual environment...
@@ -63,6 +52,13 @@ if not exist "venv\Scripts\activate.bat" (
     echo Activating Python virtual environment...
     echo Activating Python virtual environment... >> %LOG_FILE%
     call venv\Scripts\activate.bat
+)
+
+REM Check if Google API key is set
+if "%GOOGLE_API_KEY%"=="" (
+    echo ERROR: GOOGLE_API_KEY environment variable is not set
+    echo ERROR: GOOGLE_API_KEY environment variable is not set >> %LOG_FILE%
+    goto :error
 )
 
 REM Execute question generation script
@@ -88,10 +84,9 @@ if errorlevel 1 (
 REM Deactivate virtual environment
 deactivate
 
-REM Get today's date in YYYYMMDD format using PowerShell (more reliable)
-for /f %%i in ('powershell -Command "Get-Date -Format yyyyMMdd"') do set TODAY_DATE=%%i
-
-echo Today's date: %TODAY_DATE% >> %LOG_FILE%
+REM Get today's date in YYYYMMDD format
+for /f "tokens=2 delims==" %%I in ('wmic os get localdatetime /value') do set datetime=%%I
+set TODAY_DATE=%datetime:~0,8%
 
 REM Check if data files were created
 if not exist "data\questions_%TODAY_DATE%.json" (
@@ -148,16 +143,7 @@ if errorlevel 1 (
     echo ERROR: Push failed - checking authentication >> %LOG_FILE%
     echo Git remote info: >> %LOG_FILE%
     git remote -v >> %LOG_FILE% 2>&1
-    
-    REM Try to push with authentication prompt
-    echo Retrying push with authentication...
-    echo Retrying push with authentication... >> %LOG_FILE%
-    git push origin main
-    if errorlevel 1 (
-        echo ERROR: Push failed after retry
-        echo ERROR: Push failed after retry >> %LOG_FILE%
-        goto :error
-    )
+    goto :error
 )
 
 :success

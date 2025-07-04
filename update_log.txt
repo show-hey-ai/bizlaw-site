@@ -132,3 +132,181 @@ Google Gemini API接続確認完了
 体験談ファイルを保存しました: data/story_20250701.json
 体験談生成が正常に完了しました
 体験談内容: 法律知識ゼロから3ヶ月、過去問と公式テキストをひたすら繰り返しました。最初は難解でしたが、諦めずに毎...
+======================================== 
+Bizlaw Site Auto Update Started 
+Execution Time: 07/01/2025 Tue  1:30:16.35 
+======================================== 
+Setting Git configuration... 
+Fetching latest from remote repository... 
+From https://github.com/show-hey-ai/bizlaw-site
+ * branch            main       -> FETCH_HEAD
+Activating Python virtual environment... 
+Generating questions... 
+==================================================
+ビジ法3級問題生成スクリプト開始（Google Gemini API版）
+実行時刻: 2025-07-01 01:30:19
+==================================================
+Google Gemini API接続確認完了
+問題を生成中...
+問題ファイルを保存しました: data/questions_20250701.json
+問題生成が正常に完了しました
+生成された問題数: 10
+Generating story... 
+==================================================
+ビジ法3級体験談生成スクリプト開始（Google Gemini API版）
+実行時刻: 2025-07-01 01:30:32
+==================================================
+Google Gemini API接続確認完了
+体験談を生成中...
+体験談ファイルを保存しました: data/story_20250701.json
+体験談生成が正常に完了しました
+体験談内容: 法律知識ゼロから挑戦！過去問中心に1ヶ月集中学習。最初は条文の難解さに心が折れそうでしたが、毎日コツ...
+======================================== 
+Bizlaw Site Auto Update Started 
+Execution Time: 07/01/2025 Tue  1:45:45.57 
+======================================== 
+Setting Git configuration... 
+Fetching latest from remote repository... 
+From https://github.com/show-hey-ai/bizlaw-site
+ * branch            main       -> FETCH_HEAD
+Activating Python virtual environment... 
+Generating questions... 
+==================================================
+ビジ法3級問題生成スクリプト開始（Google Gemini API版）
+実行時刻: 2025-07-01 01:45:48
+==================================================
+Google Gemini API接続確認完了
+問題を生成中...
+問題ファイルを保存しました: data/questions_20250701.json
+問題生成が正常に完了しました
+生成された問題数: 10
+Generating story... 
+==================================================
+ビジ法3級体験談生成スクリプト開始（Google Gemini API版）
+実行時刻: 2025-07-01 01:45:59
+==================================================
+Google Gemini API接続確認完了
+体験談を生成中...
+体験談ファイルを保存しました: data/story_20250701.json
+体験談生成が正常に完了しました
+体験談内容: 法律知識ゼロからの挑戦！3ヶ月の独学でビジ法3級に合格。最初は専門用語に戸惑いましたが、毎日30分の...
+======================================== 
+Bizlaw Site Auto Update Started 
+Execution Time: 07/01/2025 Tue  1:50:12.45 
+======================================== 
+Setting Git configuration... 
+Fetching latest from remote repository... 
+From https://github.com/show-hey-ai/bizlaw-site
+ * branch            main       -> FETCH_HEAD
+Activating Python virtual environment... 
+Generating questions... 
+==================================================
+ビジ法3級問題生成スクリプト開始（Google Gemini API版）
+実行時刻: 2025-07-01 01:50:14
+==================================================
+Google Gemini API接続確認完了
+問題を生成中...
+問題ファイルを保存しました: data/questions_20250701.json
+問題生成が正常に完了しました
+生成された問題数: 10
+Generating story... 
+==================================================
+ビジ法3級体験談生成スクリプト開始（Google Gemini API版）
+実行時刻: 2025-07-01 01:50:26
+==================================================
+Google Gemini API接続確認完了
+体験談を生成中...
+体験談ファイルを保存しました: data/story_20250701.json
+体験談生成が正常に完了しました
+体験談内容: 法律知識ゼロからの挑戦！テキストを3周読み込み、過去問をひたすら解きました。最初は専門用語に苦戦しま...
+======================================== 
+Bizlaw Site Auto Update Started 
+Execution Time: 07/01/2025 Tue  6:00:02.19 
+======================================== 
+Setting Git configuration... 
+Fetching latest from remote repository... 
+From https://github.com/show-hey-ai/bizlaw-site
+ * branch            main       -> FETCH_HEAD
+Activating Python virtual environment... 
+Generating questions... 
+==================================================
+ビジ法3級問題生成スクリプト開始（Google Gemini API版）
+実行時刻: 2025-07-01 06:00:07
+==================================================
+Google Gemini API接続確認完了
+問題を生成中...
+問題ファイルを保存しました: data/questions_20250701.json
+問題生成が正常に完了しました
+生成された問題数: 10
+Generating story... 
+==================================================
+ビジ法3級体験談生成スクリプト開始（高ランダム性版）
+実行時刻: 2025-07-01 06:00:19
+==================================================
+Google Gemini API接続確認完了
+多彩なバリエーションの体験談を生成中...
+選択されたパターン: 法律知識ゼロの完全初心者 (親しみやすい関西弁)
+勉強期間: 4ヶ月
+体験談ファイルを保存しました: data/story_20250701.json
+体験談生成が正常に完了しました
+体験談内容: IT企業のサラリーマンやけど、新年度の目標にビジネス法務検定3級に挑戦！法律知識なんてホンマにゼロや...
+======================================== 
+Bizlaw Site Auto Update Started 
+Execution Time: 07/02/2025 Wed  6:00:02.22 
+======================================== 
+Setting Git configuration... 
+Fetching latest from remote repository... 
+^C======================================== 
+Bizlaw Site Auto Update Started 
+Execution Time: 07/03/2025 Thu  6:00:03.97 
+======================================== 
+Setting Git configuration... 
+Fetching latest from remote repository... 
+From https://github.com/show-hey-ai/bizlaw-site
+ * branch            main       -> FETCH_HEAD
+Activating Python virtual environment... 
+Generating questions... 
+==================================================
+ビジ法3級問題生成スクリプト開始（Google Gemini API版）
+実行時刻: 2025-07-03 06:00:13
+==================================================
+Google Gemini API接続エラー: 400 API key expired. Please renew the API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key expired. Please renew the API key."
+]
+ERROR: Question generation failed 
+Error occurred during auto update 
+Error Time: 07/03/2025 Thu  6:00:16.88 
+======================================== 
+======================================== 
+Bizlaw Site Auto Update Started 
+Execution Time: 07/04/2025 Fri  6:00:02.96 
+======================================== 
+Setting Git configuration... 
+Fetching latest from remote repository... 
+From https://github.com/show-hey-ai/bizlaw-site
+ * branch            main       -> FETCH_HEAD
+Activating Python virtual environment... 
+Generating questions... 
+==================================================
+ビジ法3級問題生成スクリプト開始（Google Gemini API版）
+実行時刻: 2025-07-04 06:00:07
+==================================================
+Google Gemini API接続エラー: 400 API key expired. Please renew the API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key expired. Please renew the API key."
+]
+ERROR: Question generation failed 
+Error occurred during auto update 
+Error Time: 07/04/2025 Fri  6:00:10.87 
+======================================== 
