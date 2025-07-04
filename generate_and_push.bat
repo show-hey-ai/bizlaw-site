@@ -85,6 +85,16 @@ if errorlevel 1 (
     goto :error
 )
 
+REM Execute quote generation script
+echo Generating daily quote...
+echo Generating daily quote... >> %LOG_FILE%
+python scripts\generate_quote.py >> %LOG_FILE% 2>&1
+if errorlevel 1 (
+    echo ERROR: Quote generation failed
+    echo ERROR: Quote generation failed >> %LOG_FILE%
+    goto :error
+)
+
 REM Deactivate virtual environment
 deactivate
 
@@ -106,18 +116,27 @@ if not exist "data\story_%TODAY_DATE%.json" (
     goto :error
 )
 
+if not exist "data\quote_%TODAY_DATE%.json" (
+    echo ERROR: Quote file was not created
+    echo ERROR: Quote file was not created >> %LOG_FILE%
+    goto :error
+)
+
 echo Generated files confirmed:
 echo Generated files confirmed: >> %LOG_FILE%
 echo - questions_%TODAY_DATE%.json
 echo - questions_%TODAY_DATE%.json >> %LOG_FILE%
 echo - story_%TODAY_DATE%.json
 echo - story_%TODAY_DATE%.json >> %LOG_FILE%
+echo - quote_%TODAY_DATE%.json
+echo - quote_%TODAY_DATE%.json >> %LOG_FILE%
 
 REM Add generated files to Git
 echo Adding generated files to Git...
 echo Adding generated files to Git... >> %LOG_FILE%
 git add data\questions_%TODAY_DATE%.json >> %LOG_FILE% 2>&1
 git add data\story_%TODAY_DATE%.json >> %LOG_FILE% 2>&1
+git add data\quote_%TODAY_DATE%.json >> %LOG_FILE% 2>&1
 
 REM Check if there are any staged changes
 git diff --staged --quiet
@@ -130,7 +149,7 @@ if not errorlevel 1 (
 REM Commit changes
 echo Committing changes...
 echo Committing changes... >> %LOG_FILE%
-git commit -m "Auto-generated: %TODAY_DATE% questions and story" >> %LOG_FILE% 2>&1
+git commit -m "Auto-generated: %TODAY_DATE% questions, story, and quote" >> %LOG_FILE% 2>&1
 if errorlevel 1 (
     echo ERROR: Commit failed
     echo ERROR: Commit failed >> %LOG_FILE%
@@ -170,6 +189,7 @@ echo Completion Time: %date% %time% >> %LOG_FILE%
 echo Files uploaded: >> %LOG_FILE%
 echo - questions_%TODAY_DATE%.json >> %LOG_FILE%
 echo - story_%TODAY_DATE%.json >> %LOG_FILE%
+echo - quote_%TODAY_DATE%.json >> %LOG_FILE%
 echo ======================================== >> %LOG_FILE%
 exit /b 0
 
