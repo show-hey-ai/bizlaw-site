@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gemini API Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f0f0f0;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            white-space: pre-wrap;
+            font-family: monospace;
+        }
+        .success {
+            color: #4CAF50;
+        }
+        .error {
+            color: #f44336;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Google Gemini API テスト</h1>
+        
+        <div>
+            <label for="apiKey">APIキー:</label>
+            <input type="text" id="apiKey" placeholder="AIzaSy..." value="AIzaSyDAukBCgTEy8uGfcyJflo_ADEId9GLqGb0">
+        </div>
+        
+        <button onclick="testAPIKey()">1. APIキーを検証</button>
+        <button onclick="testSimpleRequest()">2. シンプルなリクエストをテスト</button>
+        <button onclick="testChatRequest()">3. チャットリクエストをテスト</button>
+        
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const resultDiv = document.getElementById('result');
+        
+        function getAPIKey() {
+            return document.getElementById('apiKey').value.trim();
+        }
+        
+        function showResult(message, isSuccess = true) {
+            resultDiv.innerHTML = `<span class="${isSuccess ? 'success' : 'error'}">${message}</span>`;
+        }
+        
+        async function testAPIKey() {
+            const apiKey = getAPIKey();
+            showResult('APIキーを検証中...');
+            
+            try {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`);
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showResult(`✅ APIキーは有効です！\n\n利用可能なモデル:\n${JSON.stringify(data, null, 2)}`);
+                } else {
+                    showResult(`❌ APIキーの検証に失敗しました。\n\nステータス: ${response.status}\nエラー: ${JSON.stringify(data, null, 2)}`, false);
+                }
+            } catch (error) {
+                showResult(`❌ ネットワークエラー: ${error.message}`, false);
+            }
+        }
+        
+        async function testSimpleRequest() {
+            const apiKey = getAPIKey();
+            showResult('シンプルなリクエストを送信中...');
+            
+            try {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [{
+                                text: "こんにちは！元気ですか？"
+                            }]
+                        }]
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok && data.candidates) {
+                    const text = data.candidates[0].content.parts[0].text;
+                    showResult(`✅ リクエスト成功！\n\n応答: ${text}`);
+                } else {
+                    showResult(`❌ リクエスト失敗\n\nステータス: ${response.status}\nエラー: ${JSON.stringify(data, null, 2)}`, false);
+                }
+            } catch (error) {
+                showResult(`❌ ネットワークエラー: ${error.message}`, false);
+            }
+        }
+        
+        async function testChatRequest() {
+            const apiKey = getAPIKey();
+            showResult('チャットリクエストを送信中...');
+            
+            try {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [{
+                                text: "ビジネス法務検定3級について教えてください。"
+                            }]
+                        }],
+                        generationConfig: {
+                            temperature: 0.7,
+                            topK: 40,
+                            topP: 0.95,
+                            maxOutputTokens: 1024,
+                        }
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok && data.candidates) {
+                    const text = data.candidates[0].content.parts[0].text;
+                    showResult(`✅ チャットリクエスト成功！\n\n応答:\n${text}`);
+                } else {
+                    showResult(`❌ チャットリクエスト失敗\n\nステータス: ${response.status}\nエラー: ${JSON.stringify(data, null, 2)}`, false);
+                }
+            } catch (error) {
+                showResult(`❌ ネットワークエラー: ${error.message}\n\nCORSエラーの可能性があります。`, false);
+            }
+        }
+    </script>
+</div>
+</body>
+</html>

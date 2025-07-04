@@ -6,7 +6,7 @@
     <title>ビジネス法務検定3級 毎日学習サイト</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Inter:wght@300;400;500;600;700;900&family=Montserrat:wght@700;900&family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=Cinzel:wght@700;900&family=Cormorant+Garamond:wght@700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-color: #2563eb;
@@ -34,46 +34,152 @@
             min-height: 100vh;
             line-height: 1.6;
             font-weight: 400;
+            position: relative;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(37, 99, 235, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(124, 58, 237, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 50% 100%, rgba(6, 182, 212, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .container {
+            position: relative;
+            z-index: 1;
         }
 
-        /* ヘッダー */
+        /* モダンなヘッダー（非固定） */
         header {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             padding: 3rem 0;
             text-align: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             position: relative;
-            overflow: hidden;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
         }
         
         header::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
-            animation: shimmer 3s ease-in-out infinite;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(255, 255, 255, 0.1) 50%, 
+                transparent 100%);
+            animation: headerShine 3s linear infinite;
         }
         
-        @keyframes shimmer {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        @keyframes headerShine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        
+        /* 動的な光のエフェクト */
+        .header-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(251, 191, 36, 0.2) 0%, transparent 70%);
+            filter: blur(60px);
+            animation: pulse 4s ease-in-out infinite;
+            pointer-events: none;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.2); }
         }
 
         h1 {
-            font-size: 2.5rem;
             margin-bottom: 0.5rem;
-            font-weight: 700;
-            letter-spacing: 0.05em;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* 動的なタイトル */
+        .title-main {
+            font-family: 'Cinzel', 'Noto Sans JP', serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            letter-spacing: 0.08em;
+            background: linear-gradient(135deg,
+                #fbbf24 0%,
+                #f59e0b 20%,
+                #fef3c7 40%,
+                #fbbf24 60%,
+                #f59e0b 80%,
+                #fbbf24 100%);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: goldFlow 8s ease-in-out infinite;
+            filter: drop-shadow(0 2px 4px rgba(251, 191, 36, 0.3));
+            position: relative;
+        }
+        
+        @keyframes goldFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .title-sub {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 400;
+            letter-spacing: 0.3em;
+            color: rgba(254, 243, 199, 0.8);
+            text-transform: uppercase;
+            margin-top: 0.5rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.5s forwards;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
+        /* 動的な日付表示 */
         .date-display {
-            font-size: 1.2rem;
-            opacity: 0.9;
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            font-size: 0.85rem;
             font-weight: 300;
-            letter-spacing: 0.02em;
+            letter-spacing: 0.1em;
+            color: rgba(254, 243, 199, 0.6);
+            margin-top: 0.8rem;
+            position: relative;
+            z-index: 2;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.8s forwards;
         }
 
         /* コンテナ */
@@ -93,6 +199,13 @@
             border: 1px solid var(--border-color);
             position: relative;
             transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
         
         .section::after {
@@ -114,19 +227,38 @@
             color: var(--accent-color);
             margin-bottom: 1.5rem;
             font-size: 1.8rem;
-            font-weight: 600;
-            letter-spacing: 0.03em;
+            font-weight: 700;
+            letter-spacing: 0.08em;
             display: flex;
             align-items: center;
             gap: 1rem;
+            font-family: 'Cinzel', 'Noto Sans JP', serif;
+            background: linear-gradient(90deg, 
+                var(--accent-color), 
+                var(--primary-color),
+                var(--secondary-color),
+                var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 200% 100%;
+            animation: sectionGradient 3s ease-in-out infinite;
+            text-shadow: 0 0 30px rgba(6, 182, 212, 0.3);
+        }
+        
+        @keyframes sectionGradient {
+            0% { background-position: 0% 0%; }
+            50% { background-position: 100% 0%; }
+            100% { background-position: 0% 0%; }
         }
         
         .section h2::before {
             content: '';
             width: 4px;
             height: 1.5rem;
-            background: var(--accent-color);
+            background: linear-gradient(180deg, var(--accent-color), var(--primary-color));
             border-radius: 2px;
+            box-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
         }
 
         /* 名言セクション */
@@ -136,14 +268,16 @@
         }
 
         .quote-text {
-            font-size: 1.4rem;
-            font-style: normal;
+            font-family: 'Cormorant Garamond', 'Noto Sans JP', serif;
+            font-size: 1.6rem;
+            font-style: italic;
             margin-bottom: 1rem;
             color: var(--text-primary);
-            font-weight: 300;
+            font-weight: 700;
             line-height: 1.8;
             position: relative;
             padding: 0 2rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
         
         .quote-text::before,
@@ -326,12 +460,27 @@
 
         /* 合格体験記 */
         .story-content {
-            font-size: 1.1rem;
-            line-height: 1.8;
+            font-size: 1.2rem;
+            line-height: 2;
             color: var(--text-primary);
-            padding: 1.5rem;
-            background: rgba(16, 185, 129, 0.1);
-            border-radius: 8px;
+            padding: 2rem;
+            background: rgba(16, 185, 129, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            font-weight: 400;
+            letter-spacing: 0.03em;
+            text-align: justify;
+            position: relative;
+        }
+        
+        .story-content::before {
+            content: '"';
+            font-size: 3rem;
+            position: absolute;
+            top: -0.5rem;
+            left: 0.5rem;
+            color: rgba(16, 185, 129, 0.3);
+            font-family: 'Georgia', serif;
         }
 
         /* AIチャット */
@@ -350,6 +499,18 @@
             padding: 0.75rem;
             border-radius: 8px;
             max-width: 80%;
+            animation: fadeInMessage 0.3s ease;
+        }
+        
+        @keyframes fadeInMessage {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .user-message {
@@ -416,10 +577,37 @@
             cursor: not-allowed;
         }
 
+        /* スクロールバー */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--dark-bg);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-secondary);
+        }
+
         /* レスポンシブ */
         @media (max-width: 768px) {
-            h1 {
+            header {
+                padding: 2rem 0;
+            }
+            
+            .title-main {
                 font-size: 1.8rem;
+            }
+            
+            .title-sub {
+                font-size: 0.8rem;
+                letter-spacing: 0.2em;
             }
             
             .container {
@@ -429,12 +617,40 @@
             .section {
                 padding: 1.5rem;
             }
+            
+            .section h2 {
+                font-size: 1.5rem;
+            }
+            
+            .quote-text {
+                font-size: 1.3rem;
+            }
+            
+            .story-content {
+                font-size: 1.1rem;
+                line-height: 1.8;
+                padding: 1.5rem;
+            }
+            
+            .past-dates {
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+                gap: 0.5rem;
+            }
+            
+            .date-button {
+                font-size: 0.85rem;
+                padding: 0.5rem 0.75rem;
+            }
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>ビジネス法務検定3級 毎日学習サイト</h1>
+    <header id="header">
+        <div class="header-glow"></div>
+        <h1>
+            <span class="title-main">ビジネス法務検定3級</span>
+            <span class="title-sub">毎日学習サイト</span>
+        </h1>
         <div class="date-display" id="currentDate"></div>
     </header>
 
@@ -471,6 +687,14 @@
         <!-- AIチャット -->
         <section class="section" id="chatSection">
             <h2>AI学習サポート</h2>
+            <div id="apiKeyNotice" style="display: none; margin-bottom: 1rem; padding: 1rem; background: rgba(251, 191, 36, 0.1); border: 1px solid rgba(251, 191, 36, 0.3); border-radius: 8px; color: #fbbf24;">
+                <div style="margin-bottom: 0.5rem;">
+                    APIキーが設定されていないか無効です。チャット機能を使用するには有効なAPIキーが必要です。
+                </div>
+                <button onclick="promptForAPIKey()" style="padding: 0.5rem 1rem; background: #fbbf24; color: #0f172a; border: none; border-radius: 4px; cursor: pointer; font-weight: 500;">
+                    APIキーを設定
+                </button>
+            </div>
             <div class="chat-container" id="chatContainer"></div>
             <div class="chat-input-container">
                 <input type="text" id="chatInput" placeholder="質問を入力してください..." onkeypress="handleChatKeyPress(event)">
@@ -480,12 +704,157 @@
     </div>
 
     <script>
-        // APIキー（本番環境では環境変数から取得）
-        const GEMINI_API_KEY = 'AIzaSyDAukBCgTEy8uGfcyJflo_ADEId9GLqGb0';
-        const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
+        // APIキー
+        let GEMINI_API_KEY = localStorage.getItem('gemini_api_key') || 'AIzaSyDAukBCgTEy8uGfcyJflo_ADEId9GLqGb0';
+        
+        // APIキーの検証（デバッグ用）
+        async function validateAPIKey() {
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [{
+                                text: "Hi"
+                            }]
+                        }]
+                    })
+                });
+                console.log('API Key validation response:', response.status);
+                if (response.ok) {
+                    console.log('API Key is valid');
+                    return true;
+                } else {
+                    const errorData = await response.json();
+                    console.error('API Key validation failed:', response.status, errorData);
+                    return false;
+                }
+            } catch (error) {
+                console.error('API Key validation error:', error);
+                return false;
+            }
+        }
+        
+        // APIキーの設定を促す
+        function promptForAPIKey() {
+            const newKey = prompt('Google Gemini APIキーを入力してください:\n\n取得方法:\n1. https://makersuite.google.com/app/apikey にアクセス\n2. "Create API key" をクリック\n3. 生成されたキーをコピー');
+            
+            if (newKey && newKey.trim()) {
+                GEMINI_API_KEY = newKey.trim();
+                localStorage.setItem('gemini_api_key', GEMINI_API_KEY);
+                location.reload(); // ページをリロードして新しいキーで初期化
+            }
+        }
         
         // 会話履歴
         let chatHistory = [];
+        
+        // Gemini APIを直接呼び出す関数（改良版）
+        async function callGeminiAPI(message) {
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+            
+            // 会話履歴を含めたプロンプトを構築
+            let conversationContext = "あなたはビジネス法務検定3級の学習をサポートするAIアシスタントです。\n";
+            conversationContext += "学習者の質問に対して、分かりやすく丁寧に回答してください。\n";
+            conversationContext += "法律用語は初学者にも理解できるように説明し、具体例を用いて解説してください。\n\n";
+            
+            // 最近の会話履歴を追加（最大5ターン）
+            const recentHistory = chatHistory.slice(-10); // 最大5往復
+            for (let i = 0; i < recentHistory.length; i += 2) {
+                if (recentHistory[i] && recentHistory[i + 1]) {
+                    conversationContext += `過去の質問: ${recentHistory[i].content}\n`;
+                    conversationContext += `過去の回答: ${recentHistory[i + 1].content}\n\n`;
+                }
+            }
+            
+            conversationContext += `現在の質問: ${message}`;
+            
+            const requestBody = {
+                contents: [{
+                    parts: [{
+                        text: conversationContext
+                    }]
+                }],
+                generationConfig: {
+                    temperature: 0.9,
+                    topK: 1,
+                    topP: 1,
+                    maxOutputTokens: 2048,
+                },
+                safetySettings: [
+                    {
+                        category: "HARM_CATEGORY_HARASSMENT",
+                        threshold: "BLOCK_MEDIUM_AND_ABOVE"
+                    },
+                    {
+                        category: "HARM_CATEGORY_HATE_SPEECH",
+                        threshold: "BLOCK_MEDIUM_AND_ABOVE"
+                    },
+                    {
+                        category: "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+                        threshold: "BLOCK_MEDIUM_AND_ABOVE"
+                    },
+                    {
+                        category: "HARM_CATEGORY_DANGEROUS_CONTENT",
+                        threshold: "BLOCK_MEDIUM_AND_ABOVE"
+                    }
+                ]
+            };
+            
+            console.log('Sending request to Gemini API:', url);
+            console.log('Request body:', requestBody);
+            
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => null);
+                    console.error('API Error Response:', response.status, errorData);
+                    
+                    if (response.status === 400 && errorData?.error?.message?.includes('API_KEY_INVALID')) {
+                        throw new Error('INVALID_API_KEY');
+                    } else if (response.status === 429) {
+                        throw new Error('RATE_LIMIT');
+                    } else if (response.status === 403) {
+                        throw new Error('FORBIDDEN');
+                    } else {
+                        throw new Error(`API_ERROR_${response.status}`);
+                    }
+                }
+
+                const data = await response.json();
+                console.log('API Response:', data);
+                
+                // レスポンスの構造を確認
+                if (data.candidates && data.candidates.length > 0) {
+                    const candidate = data.candidates[0];
+                    if (candidate.content && candidate.content.parts && candidate.content.parts.length > 0) {
+                        return candidate.content.parts[0].text;
+                    }
+                }
+                
+                // エラーレスポンスの場合
+                if (data.error) {
+                    console.error('API returned error:', data.error);
+                    throw new Error(data.error.message || 'API_ERROR');
+                }
+                
+                throw new Error('UNEXPECTED_RESPONSE');
+            } catch (error) {
+                console.error('Error calling Gemini API:', error);
+                throw error;
+            }
+        }
 
         // 日付表示
         function displayCurrentDate() {
@@ -493,31 +862,86 @@
             const options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
             document.getElementById('currentDate').textContent = today.toLocaleDateString('ja-JP', options);
         }
+        
+        // セクションの表示アニメーション
+        const observeElements = () => {
+            const sections = document.querySelectorAll('.section');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        };
 
         // 今日のデータを読み込む
         async function loadTodaysData() {
             const today = new Date();
             const dateStr = formatDate(today);
             
+            // ローカルファイルモードのチェック
+            const isLocal = window.location.protocol === 'file:';
+            if (isLocal) {
+                console.log('ローカルファイルモードで実行中');
+                // ヘッダーに警告を表示
+                const header = document.getElementById('header');
+                const warning = document.createElement('div');
+                warning.style.cssText = 'background: rgba(251, 191, 36, 0.2); color: #fbbf24; padding: 0.5rem; text-align: center; font-size: 0.9rem;';
+                warning.innerHTML = '⚠️ ローカルファイルモード: サンプルデータ表示中 | 完全な機能には<code>start.bat</code>を使用してください';
+                header.insertAdjacentElement('afterend', warning);
+            }
+            
             // 問題を読み込む
             try {
-                const questionsResponse = await fetch(`data/questions_${dateStr}.json`);
+                const questionsResponse = await fetch(`./data/questions_${dateStr}.json`, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                    },
+                    mode: 'same-origin'
+                });
                 if (questionsResponse.ok) {
                     const data = await questionsResponse.json();
-                    const questions = data.questions || data; // questionsプロパティがあればそれを使用
+                    const questions = data.questions || data;
                     displayQuestions(questions, 'questionsContainer');
                 } else {
-                    // サンプルデータを表示
+                    console.log(`今日の問題ファイルが見つかりません (${questionsResponse.status})。サンプル問題を表示します。`);
                     displayQuestions(getSampleQuestions(), 'questionsContainer');
                 }
             } catch (error) {
                 console.error('問題の読み込みエラー:', error);
-                displayQuestions(getSampleQuestions(), 'questionsContainer');
+                if (error.message.includes('Failed to fetch')) {
+                    const container = document.getElementById('questionsContainer');
+                    container.innerHTML = `
+                        <div style="padding: 1rem; background: rgba(251, 191, 36, 0.1); border: 1px solid rgba(251, 191, 36, 0.3); border-radius: 8px; color: #fbbf24;">
+                            <p style="margin-bottom: 0.5rem;">問題の読み込みに失敗しました。サンプル問題を表示します。</p>
+                            <p style="font-size: 0.9rem; opacity: 0.8;">※ ローカルサーバーを使用してアクセスすることを推奨します。</p>
+                        </div>
+                    `;
+                    setTimeout(() => {
+                        displayQuestions(getSampleQuestions(), 'questionsContainer');
+                    }, 2000);
+                } else {
+                    displayQuestions(getSampleQuestions(), 'questionsContainer');
+                }
             }
 
             // 体験記を読み込む
             try {
-                const storyResponse = await fetch(`data/story_${dateStr}.json`);
+                const storyResponse = await fetch(`./data/story_${dateStr}.json`, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                    },
+                    mode: 'same-origin'
+                });
                 if (storyResponse.ok) {
                     const data = await storyResponse.json();
                     const story = data.story || data;
@@ -534,7 +958,13 @@
 
             // 名言を読み込む
             try {
-                const quoteResponse = await fetch(`data/quote_${dateStr}.json`);
+                const quoteResponse = await fetch(`./data/quote_${dateStr}.json`, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                    },
+                    mode: 'same-origin'
+                });
                 if (quoteResponse.ok) {
                     const quote = await quoteResponse.json();
                     displayQuote(quote);
@@ -570,6 +1000,11 @@
             const container = document.getElementById(containerId);
             container.innerHTML = '';
             
+            if (!Array.isArray(questions)) {
+                container.innerHTML = '<p>データ形式に問題があります。</p>';
+                return;
+            }
+            
             questions.forEach((q, index) => {
                 const card = document.createElement('div');
                 card.className = 'question-card';
@@ -597,62 +1032,69 @@
         // 過去の問題の日付を表示
         async function displayPastDates() {
             const container = document.getElementById('pastDates');
-            container.innerHTML = ''; // クリア
+            container.innerHTML = '';
             
             try {
-                // dataフォルダ内のすべてのquestions_*.jsonファイルを取得
-                // 実際にはサーバー側でファイル一覧を取得する必要があるため、
-                // ここでは既知の日付範囲でチェックする方式を採用
-                const availableDates = [];
+                // dataフォルダから実際に存在するファイルを確認する代わりに、
+                // 開始日から今日の前日までの日付を動的に生成
+                const startDate = new Date(2025, 5, 29); // 2025年6月29日（月は0ベース）
                 const today = new Date();
+                today.setHours(0, 0, 0, 0);
                 
-                // 過去30日分をチェック（必要に応じて拡張可能）
-                for (let i = 0; i < 30; i++) {
-                    const date = new Date(today);
-                    date.setDate(date.getDate() - i);
-                    const dateStr = formatDate(date);
+                const availableDates = [];
+                
+                // 開始日から昨日までの日付を生成
+                const currentDate = new Date(startDate);
+                while (currentDate < today) {
+                    // dataフォルダに該当ファイルが存在するかチェック
+                    const dateStr = formatDate(currentDate);
+                    const checkDate = new Date(currentDate);
                     
-                    // ファイルの存在を確認
-                    try {
-                        const response = await fetch(`data/questions_${dateStr}.json`);
-                        if (response.ok) {
-                            availableDates.push({
-                                dateStr: dateStr,
-                                date: new Date(date)
-                            });
-                        }
-                    } catch (error) {
-                        // ファイルが存在しない場合は無視
+                    // 今日より前の日付のみを追加
+                    if (checkDate < today) {
+                        availableDates.push({
+                            dateStr: dateStr,
+                            date: new Date(checkDate)
+                        });
                     }
+                    
+                    // 次の日へ
+                    currentDate.setDate(currentDate.getDate() + 1);
                 }
                 
-                // 日付順（新しい順）にソート
+                // 日付を新しい順（降順）でソート
                 availableDates.sort((a, b) => b.date - a.date);
                 
-                // ボタンを作成（今日の分は除外）
-                availableDates.forEach((item, index) => {
-                    if (index === 0) return; // 今日の分はスキップ
-                    
+                console.log('Available dates for past questions:', availableDates);
+                
+                availableDates.forEach((item) => {
                     const button = document.createElement('button');
                     button.className = 'date-button';
                     button.textContent = `${item.date.getMonth() + 1}月${item.date.getDate()}日`;
-                    button.onclick = () => {
-                        // すべてのボタンからアクティブクラスを削除
-                        document.querySelectorAll('.date-button').forEach(btn => {
-                            btn.classList.remove('active');
-                        });
-                        // クリックされたボタンにアクティブクラスを追加
-                        if (currentPastDate === item.dateStr) {
+                    button.setAttribute('data-datestr', item.dateStr);
+                    
+                    button.onclick = function() {
+                        console.log('Date button clicked:', item.dateStr);
+                        
+                        if (currentPastDate === item.dateStr && button.classList.contains('active')) {
+                            // 同じ日付をクリックした場合は閉じる
                             button.classList.remove('active');
+                            loadPastQuestions(null);
                         } else {
+                            // 他のボタンのアクティブ状態を解除
+                            document.querySelectorAll('.date-button').forEach(btn => {
+                                btn.classList.remove('active');
+                            });
+                            // このボタンをアクティブにして問題を読み込む
                             button.classList.add('active');
+                            loadPastQuestions(item.dateStr);
                         }
-                        loadPastQuestions(item.dateStr);
                     };
+                    
                     container.appendChild(button);
                 });
                 
-                if (availableDates.length <= 1) {
+                if (availableDates.length === 0) {
                     container.innerHTML = '<p style="color: var(--text-secondary);">過去の問題はまだありません。</p>';
                 }
                 
@@ -662,15 +1104,15 @@
             }
         }
 
-        // 現在表示中の過去問題の日付を記録
         let currentPastDate = null;
         
         // 過去の問題を読み込む
         async function loadPastQuestions(dateStr) {
             const container = document.getElementById('pastQuestionsContainer');
             
-            // 同じ日付をクリックした場合は閉じる
-            if (currentPastDate === dateStr && container.innerHTML !== '') {
+            console.log('loadPastQuestions called with:', dateStr);
+            
+            if (dateStr === null) {
                 container.innerHTML = '';
                 currentPastDate = null;
                 return;
@@ -680,20 +1122,134 @@
             currentPastDate = dateStr;
             
             try {
-                const response = await fetch(`data/questions_${dateStr}.json`);
+                // 相対パスを使用（ローカルファイル対応）
+                const url = `./data/questions_${dateStr}.json`;
+                
+                // ローカルファイルで開いている場合のために、別の方法を試す
+                const isLocal = window.location.protocol === 'file:';
+                if (isLocal) {
+                    // ローカルファイルの場合、サンプルデータを使用
+                    console.log('ローカルファイルモードで実行中。サンプルデータを使用します。');
+                    container.innerHTML = `
+                        <div style="padding: 1rem; background: rgba(251, 191, 36, 0.1); border: 1px solid rgba(251, 191, 36, 0.3); border-radius: 8px; color: #fbbf24; margin-bottom: 1rem;">
+                            <p style="margin-bottom: 0.5rem;">⚠️ ローカルファイルモードで実行中のため、実際のデータファイルは読み込めません。</p>
+                            <p style="font-size: 0.9rem; opacity: 0.8;">
+                                完全な機能を使用するには：<br>
+                                1. <code>start.bat</code> をダブルクリック、または<br>
+                                2. コマンドプロンプトで <code>python -m http.server 8000</code> を実行後、<br>
+                                3. ブラウザで <code>http://localhost:8000</code> にアクセス
+                            </p>
+                        </div>
+                    `;
+                    // 対応する日付のサンプル問題を表示
+                    const dateObj = new Date(dateStr.substring(0,4), parseInt(dateStr.substring(4,6))-1, parseInt(dateStr.substring(6,8)));
+                    displayQuestions(generateSampleQuestionsForDate(dateObj), 'pastQuestionsContainer');
+                    return;
+                }
+                console.log('Fetching:', url);
+                
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                    },
+                    mode: 'same-origin'
+                });
+                
+                console.log('Response status:', response.status);
+                console.log('Response ok:', response.ok);
+                console.log('Response type:', response.type);
+                
                 if (response.ok) {
-                    const data = await response.json();
+                    const text = await response.text();
+                    console.log('Response text length:', text.length);
+                    console.log('First 100 chars:', text.substring(0, 100));
+                    
+                    let data;
+                    try {
+                        data = JSON.parse(text);
+                        console.log('Data parsed successfully:', data);
+                    } catch (parseError) {
+                        console.error('JSON parse error:', parseError);
+                        console.error('Raw text:', text);
+                        container.innerHTML = '<p>データの形式にエラーがあります。</p>';
+                        return;
+                    }
+                    
                     const questions = data.questions || data;
-                    displayQuestions(questions, 'pastQuestionsContainer');
+                    if (Array.isArray(questions) && questions.length > 0) {
+                        displayQuestions(questions, 'pastQuestionsContainer');
+                    } else {
+                        container.innerHTML = '<p>問題データが見つかりませんでした。</p>';
+                    }
                 } else {
-                    container.innerHTML = '<p>この日の問題は見つかりませんでした。</p>';
+                    console.error('Response not ok:', response.status, response.statusText);
+                    
+                    // より詳細なエラーメッセージ
+                    if (response.status === 404) {
+                        container.innerHTML = '<p>この日の問題データファイルが見つかりません。</p>';
+                    } else if (response.status === 0) {
+                        container.innerHTML = `
+                            <p style="color: var(--error-color);">問題の読み込みに失敗しました。</p>
+                            <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 0.5rem;">
+                                CORSエラーの可能性があります。<br>
+                                ローカルサーバーを起動してアクセスしてください：<br>
+                                1. コマンドプロンプトで <code>python server.py</code> を実行<br>
+                                2. ブラウザで <code>http://localhost:8000</code> にアクセス
+                            </p>
+                        `;
+                    } else {
+                        container.innerHTML = `<p>エラーが発生しました。(ステータス: ${response.status})</p>`;
+                    }
                 }
             } catch (error) {
                 console.error('過去の問題の読み込みエラー:', error);
-                container.innerHTML = '<p>問題の読み込みに失敗しました。</p>';
+                console.error('Error type:', error.constructor.name);
+                console.error('Error details:', error.message, error.stack);
+                
+                // CORSエラーの可能性を詳しく説明
+                if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
+                    container.innerHTML = `
+                        <div style="color: var(--error-color);">
+                            <p>問題の読み込みに失敗しました。</p>
+                            <div style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 1rem; padding: 1rem; background: rgba(239, 68, 68, 0.1); border-radius: 8px; border: 1px solid rgba(239, 68, 68, 0.3);">
+                                <strong>解決方法：</strong><br>
+                                HTMLファイルを直接開いている場合は、ローカルサーバーを使用してください：<br><br>
+                                1. コマンドプロンプトまたはターミナルを開く<br>
+                                2. <code>cd C:\\Users\\user\\Desktop\\bizlaw-site</code> でフォルダに移動<br>
+                                3. <code>python server.py</code> を実行<br>
+                                4. ブラウザで <code>http://localhost:8000</code> にアクセス<br><br>
+                                または、<code>start.bat</code> をダブルクリックして起動することもできます。
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    container.innerHTML = `<p>予期しないエラーが発生しました: ${error.message}</p>`;
+                }
             }
         }
 
+        // 日付に応じたサンプル問題を生成
+        function generateSampleQuestionsForDate(date) {
+            const baseQuestions = getSampleQuestions();
+            const month = date.getMonth() + 1;
+            const day = date.getDate();
+            
+            // 日付に基づいて問題をシャッフル
+            const shuffled = [...baseQuestions];
+            const seed = month * 31 + day;
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = (seed * (i + 1)) % (i + 1);
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            
+            return shuffled.map((q, index) => ({
+                ...q,
+                id: index + 1,
+                question: `[${month}月${day}日の問題] ` + q.question
+            }));
+        }
+        
         // サンプル問題
         function getSampleQuestions() {
             return [
@@ -792,7 +1348,7 @@
             return quotes[index];
         }
 
-        // AIチャット機能
+        // AIチャット機能（改良版）
         async function sendChatMessage() {
             const input = document.getElementById('chatInput');
             const button = document.getElementById('chatSendButton');
@@ -822,79 +1378,51 @@
             container.scrollTop = container.scrollHeight;
             
             try {
-                // 会話履歴を構築（Gemini API形式）
-                const contents = [];
-                
-                // 過去の会話履歴を追加（役割を明確に）
-                for (let i = 0; i < chatHistory.length; i += 2) {
-                    if (chatHistory[i] && chatHistory[i].role === 'user') {
-                        contents.push({
-                            role: 'user',
-                            parts: [{ text: chatHistory[i].content }]
-                        });
-                    }
-                    if (chatHistory[i + 1] && chatHistory[i + 1].role === 'assistant') {
-                        contents.push({
-                            role: 'model',
-                            parts: [{ text: chatHistory[i + 1].content }]
-                        });
-                    }
-                }
-                
-                // 現在の質問を追加
-                contents.push({
-                    role: 'user',
-                    parts: [{ text: message }]
-                });
-                
                 // Gemini APIを呼び出し
-                const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        contents: contents,
-                        generationConfig: {
-                            temperature: 0.7,
-                            topK: 40,
-                            topP: 0.95,
-                            maxOutputTokens: 1024,
-                        },
-                        systemInstruction: {
-                            parts: [{
-                                text: "あなたはビジネス法務検定3級の学習サポートAIです。学習者からの質問に分かりやすく、親切に答えてください。法律の専門用語は分かりやすく説明し、実務での活用例も含めて回答してください。"
-                            }]
-                        }
-                    })
-                });
+                const aiResponse = await callGeminiAPI(message);
+                aiMessageDiv.textContent = aiResponse;
                 
-                if (response.ok) {
-                    const data = await response.json();
-                    if (data.candidates && data.candidates[0] && data.candidates[0].content) {
-                        const aiResponse = data.candidates[0].content.parts[0].text;
-                        aiMessageDiv.textContent = aiResponse;
-                        
-                        // 会話履歴に追加
-                        chatHistory.push({ role: 'user', content: message });
-                        chatHistory.push({ role: 'assistant', content: aiResponse });
-                        
-                        // 履歴が長くなりすぎたら古いものを削除（20メッセージまで保持）
-                        if (chatHistory.length > 20) {
-                            chatHistory = chatHistory.slice(-20);
-                        }
-                    } else {
-                        throw new Error('Invalid response format');
-                    }
-                } else {
-                    const errorData = await response.json();
-                    console.error('API Error Details:', errorData);
-                    throw new Error(`API Error: ${response.status}`);
+                // 会話履歴に追加
+                chatHistory.push({ role: 'user', content: message });
+                chatHistory.push({ role: 'assistant', content: aiResponse });
+                
+                // 履歴が長くなりすぎたら古いものを削除
+                if (chatHistory.length > 20) {
+                    chatHistory = chatHistory.slice(-20);
                 }
                 
             } catch (error) {
                 console.error('AIチャットエラー:', error);
-                aiMessageDiv.textContent = 'エラーが発生しました。しばらく待ってからもう一度お試しください。';
+                
+                let errorMessage = 'エラーが発生しました。';
+                
+                // より詳細なエラーメッセージ
+                if (error.message === 'INVALID_API_KEY') {
+                    errorMessage = 'APIキーが無効です。正しいAPIキーを設定してください。';
+                } else if (error.message === 'RATE_LIMIT') {
+                    errorMessage = 'APIの利用制限に達しました。しばらく待ってから再度お試しください。';
+                } else if (error.message === 'FORBIDDEN') {
+                    errorMessage = 'APIへのアクセスが拒否されました。APIキーの権限を確認してください。';
+                } else if (error.message === 'UNEXPECTED_RESPONSE') {
+                    errorMessage = 'APIから予期しない応答がありました。もう一度お試しください。';
+                } else if (error.message.includes('Failed to fetch') || error.message === 'NetworkError') {
+                    errorMessage = 'ネットワークエラーが発生しました。インターネット接続を確認してください。';
+                } else if (error.message.includes('API_ERROR_')) {
+                    const statusCode = error.message.replace('API_ERROR_', '');
+                    errorMessage = `APIエラー (${statusCode}) が発生しました。しばらく待ってから再度お試しください。`;
+                } else {
+                    errorMessage = `エラーが発生しました: ${error.message}`;
+                }
+                
+                // エラーメッセージを表示
+                aiMessageDiv.innerHTML = `
+                    <div style="color: #ef4444;">
+                        ${errorMessage}
+                    </div>
+                    <div style="margin-top: 0.5rem; font-size: 0.9rem; color: #94a3b8;">
+                        ヒント: Google AI Studioで新しいAPIキーを取得して、index.htmlのGEMINI_API_KEYを更新してください。
+                    </div>
+                `;
             }
             
             // スクロールを最下部に
@@ -913,9 +1441,39 @@
         }
 
         // ページ読み込み時の初期化
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', async function() {
             displayCurrentDate();
             loadTodaysData();
+            observeElements();
+            
+            // APIキーの検証
+            console.log('Validating API key...');
+            const isValidKey = await validateAPIKey();
+            
+            // 初回メッセージを表示
+            const container = document.getElementById('chatContainer');
+            const welcomeMessage = document.createElement('div');
+            welcomeMessage.className = 'ai-message chat-message';
+            
+            if (isValidKey) {
+                welcomeMessage.textContent = 'こんにちは！ビジネス法務検定3級の学習をサポートします。分からないことがあれば、お気軽に質問してください。';
+                document.getElementById('apiKeyNotice').style.display = 'none';
+            } else {
+                welcomeMessage.innerHTML = `
+                    <div style="color: #fbbf24;">
+                        ⚠️ APIキーの検証に失敗しました。
+                    </div>
+                    <div style="margin-top: 0.5rem; font-size: 0.9rem;">
+                        チャット機能を使用するには、有効なGoogle Gemini APIキーが必要です。
+                        <br>
+                        <a href="https://makersuite.google.com/app/apikey" target="_blank" style="color: #60a5fa; text-decoration: underline;">
+                            Google AI StudioでAPIキーを取得
+                        </a>
+                    </div>
+                `;
+                document.getElementById('apiKeyNotice').style.display = 'block';
+            }
+            container.appendChild(welcomeMessage);
         });
     </script>
 </body>
